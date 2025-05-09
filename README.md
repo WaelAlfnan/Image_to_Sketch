@@ -48,6 +48,14 @@ The application uses the following steps to convert an image to a pencil sketch:
 4. Invert the blurred image
 5. Blend the grayscale image with the blurred inverse using a dodge blend
 
+## Team Members
+
+- Abdulrahman Sharif Sulaimani
+- Ahmed Osama Mohammed Khairy
+- Omar Arshad Mohammed
+- Wael Bahaa El-Din Mostafa
+
+
 ## License
 
 This project is open source and available under the MIT License. 
