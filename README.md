@@ -140,7 +140,7 @@ Here is an example of the process:
 
 ## Team Members
 
-- Abdulrahman Sherif Solaimani
+- Abdelrhman Sherif Mahmoud
 - Ahmed Osama Mohammed Khairy
 - Omar Arshad Mohammed
 - Wael Bahaa Aldien Mostafa
