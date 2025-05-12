@@ -1,61 +1,151 @@
 # Image to Pencil Sketch Converter
 
-This Python application converts images into pencil sketches using OpenCV. It provides a simple graphical user interface to load images, view the conversion results, and save the generated sketches.
+This project converts an image to a pencil sketch using OpenCV and displays each step of the process. The project is designed to run in Google Colab.
 
 ## Features
 
-- Load images from your computer
-- Convert images to pencil sketches in real-time
-- View original and sketch images side by side
-- Save the generated sketches as image files
-- Supports various image formats (JPG, PNG, BMP, GIF)
+- **Image Upload:** Allows users to upload an image file.
+- **Grayscale Conversion:** Converts the uploaded image to grayscale.
+- **Inversion:** Inverts the grayscale image.
+- **Gaussian Blur:** Applies a Gaussian blur to the inverted image.
+- **Inverted Blur:** Inverts the blurred image.
+- **Pencil Sketch Creation:** Blends the grayscale image with the inverted blurred image to create a pencil sketch.
+- **Step-by-Step Display:** Displays each step of the process for better understanding.
 
 ## Requirements
 
-- Python 3.7 or higher
+- Python 3.x
 - OpenCV
 - NumPy
-- Pillow (PIL)
-- Tkinter (usually comes with Python)
+- Google Colab
+- Matplotlib
 
 ## Installation
 
-1. Clone this repository or download the source code
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/yourusername/image-to-pencil-sketch.git
+    cd image-to-pencil-sketch
+    ```
+
+2. **Install the required libraries:**
+
+    ```bash
+    pip install opencv-python-headless numpy matplotlib
+    ```
 
 ## Usage
 
-1. Run the application:
-   ```bash
-   python image_to_sketch.py
-   ```
+1. **Upload the image:**
 
-2. Click the "Load Image" button to select an image from your computer
-3. The application will display the original image and its pencil sketch version side by side
-4. Click the "Save Sketch" button to save the generated sketch
-5. Choose the location and format for saving the sketch
+    The script will prompt you to upload an image file when you run it.
+
+2. **Run the script:**
+
+    ```python
+    import cv2
+    import numpy as np
+    from google.colab import files
+    from IPython.display import Image, display
+    import matplotlib.pyplot as plt
+
+    def display_image(image, title, position):
+        """Helper function to display an image with a title"""
+        plt.subplot(position)
+        plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        plt.title(title)
+        plt.axis('off')
+
+    def convert_to_sketch(image):
+        """Convert the image to a pencil sketch and display each step"""
+        
+        # Display original image
+        display_image(image, "Original Image", 231)
+        
+        # Convert to grayscale
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        display_image(gray_image, "Grayscale Image", 232)
+        
+        # Invert the grayscale image
+        inverted_image = 255 - gray_image
+        display_image(inverted_image, "Inverted Grayscale Image", 233)
+        
+        # Apply Gaussian blur
+        blurred_image = cv2.GaussianBlur(inverted_image, (21, 21), 0)
+        display_image(blurred_image, "Blurred Image", 234)
+        
+        # Invert the blurred image
+        inverted_blurred = 255 - blurred_image
+        display_image(inverted_blurred, "Inverted Blurred Image", 235)
+        
+        # Create the pencil sketch by blending
+        pencil_sketch = cv2.divide(gray_image, inverted_blurred, scale=256.0)
+        display_image(pencil_sketch, "Pencil Sketch", 236)
+        
+        return pencil_sketch
+
+    def process_image():
+        # Upload the image
+        uploaded = files.upload()
+
+        # Get the first uploaded file
+        file_name = list(uploaded.keys())[0]
+
+        # Read the image
+        image = cv2.imread(file_name)
+        if image is None:
+            print("Error: Could not read the image")
+            return
+        # Convert to sketch and display all steps
+        plt.figure(figsize=(15, 10))
+        convert_to_sketch(image)
+        plt.show()
+
+    # Run the program
+    if __name__ == "__main__":
+        process_image()
+    ```
 
 ## How It Works
 
-The application uses the following steps to convert an image to a pencil sketch:
+1. **Upload the Image:**
+   - The user uploads an image file.
+   
+2. **Convert to Grayscale:**
+   - The image is converted to a grayscale image.
+   
+3. **Invert the Grayscale Image:**
+   - The grayscale image is inverted.
+   
+4. **Apply Gaussian Blur:**
+   - A Gaussian blur is applied to the inverted image.
+   
+5. **Invert the Blurred Image:**
+   - The blurred image is inverted.
+   
+6. **Create the Pencil Sketch:**
+   - The pencil sketch is created by blending the grayscale image with the inverted blurred image using the `cv2.divide` function.
 
-1. Convert the image to grayscale
-2. Invert the grayscale image
-3. Apply Gaussian blur to the inverted image
-4. Invert the blurred image
-5. Blend the grayscale image with the blurred inverse using a dodge blend
+## Example
+
+Here is an example of the process:
+
+1. **Original Image**
+2. **Grayscale Image**
+3. **Inverted Grayscale Image**
+4. **Blurred Image**
+5. **Inverted Blurred Image**
+6. **Pencil Sketch**
 
 ## Team Members
 
-- Abdulrahman Sharif Sulaimani
+- Abdulrahman Sherif Solaimani
 - Ahmed Osama Mohammed Khairy
 - Omar Arshad Mohammed
-- Wael Bahaa El-Din Mostafa
-
+- Wael Bahaa Aldien Mostafa
+- Mohamed Ali Hassan Aref
 
 ## License
 
-This project is open source and available under the MIT License. 
+This project is licensed under the MIT License. See the LICENSE file for details.
