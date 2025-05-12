@@ -25,8 +25,8 @@ This project converts an image to a pencil sketch using OpenCV and displays each
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/image-to-pencil-sketch.git
-    cd image-to-pencil-sketch
+    git clone https://github.com/WaelAlfnan/Image_to_Sketch.git
+    cd Image_to_Sketch
     ```
 
 2. **Install the required libraries:**
