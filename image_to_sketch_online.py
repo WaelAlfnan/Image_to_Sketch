@@ -36,4 +36,25 @@ def convert_to_sketch(image):
     pencil_sketch = cv2.divide(gray_image, inverted_blurred, scale=256.0)
     display_image(pencil_sketch, "Pencil Sketch", 236)
     
-    return pencil_sketch
+    return pencil_sketch
+
+def process_image():
+    # Upload the image
+    uploaded = files.upload()
+
+    # Get the first uploaded file
+    file_name = list(uploaded.keys())[0]
+
+    # Read the image
+    image = cv2.imread(file_name)
+    if image is None:
+        print("Error: Could not read the image")
+        return
+    # Convert to sketch and display all steps
+    plt.figure(figsize=(15, 10))
+    convert_to_sketch(image)
+    plt.show()
+
+# Run the program
+if __name__ == "__main__":
+    process_image()
